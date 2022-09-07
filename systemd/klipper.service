@@ -12,7 +12,7 @@ WantedBy=multi-user.target
 
 [Service]
 Environment=KLIPPER_CONFIG=/home/hive/klipper_config/printer.cfg
-Environment=KLIPPER_LOG=/home/hive/klipper_logs/klippy.log
+Environment=KLIPPER_LOG=/var/run/klipper_logs/klippy.log
 Environment=KLIPPER_SOCKET=/tmp/klippy_uds
 Environment=KLIPPER_PRINTER=/tmp/printer
 Type=simple
@@ -21,3 +21,6 @@ RemainAfterExit=yes
 ExecStart=/home/hive/klippy-env/bin/python /home/hive/klipper/klippy/klippy.py ${KLIPPER_CONFIG} -I ${KLIPPER_PRINTER} -l ${KLIPPER_LOG} -a ${KLIPPER_SOCKET}
 Restart=always
 RestartSec=10
+RuntimeDirectory=klipper_logs
+RuntimeDirectoryMode=0775
+RuntimeDirectoryPreserve=yes
