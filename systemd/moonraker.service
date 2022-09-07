@@ -1,0 +1,24 @@
+#Systemd Moonraker Service
+# /etc/systemd/system/moonraker.service
+
+[Unit]
+Description=Systemd Moonraker Service
+Documentation=https://moonraker.readthedocs.io/
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Environment=MOONRAKER_CONF=/home/hive/klipper_config/moonraker.conf
+Environment=MOONRAKER_LOG=/var/run/klipper_logs/moonraker.log
+Type=simple
+SupplementaryGroups=moonraker-admin
+User=hive
+RemainAfterExit=yes
+ExecStart=/home/hive/moonraker-env/bin/python /home/hive/moonraker/moonraker/moonraker.py -c ${MOONRAKER_CONF} -l ${MOONRAKER_LOG}
+Restart=always
+RestartSec=10
+RuntimeDirectory=klipper_logs
+RuntimeDirectoryMode=0775
+RuntimeDirectoryPreserve=yes
